@@ -1,0 +1,14 @@
+{
+  "name": "Cahier de Classe - Gestion Classe",
+  "short_name": "Cahier Classe",
+  "description": "Élèves, notes, présences, bulletins et fin d'année.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F6F1E4",
+  "theme_color": "#1F3A2E",
+  "orientation": "any",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
