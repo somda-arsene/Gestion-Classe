@@ -11,17 +11,12 @@
 <link rel="icon" href="icon-192.png" />
 <link rel="apple-touch-icon" href="icon-192.png" />
 
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
+<link rel="stylesheet" href="styles.css" />
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
-  body { margin: 0; }
-  .font-display { font-family: 'Lora', serif; }
-  .font-mono-num { font-family: 'JetBrains Mono', monospace; }
-  .font-sans { font-family: 'Inter', sans-serif; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; }
+  .font-display { font-family: Georgia, 'Times New Roman', serif; font-weight: 600; }
+  .font-mono-num { font-family: 'Courier New', monospace; }
+  .font-sans { font-family: -apple-system, Roboto, Helvetica, Arial, sans-serif; }
   .fille { color: #B23A2E; }
   .garcon { color: #2B2118; }
   @media print {
@@ -35,7 +30,9 @@
 <body>
   <div id="root"></div>
 
-  <script type="text/babel" data-presets="react" src="app.jsx"></script>
+  <script src="react.production.min.js"></script>
+  <script src="react-dom.production.min.js"></script>
+  <script src="app.min.js"></script>
 
   <script>
     if ('serviceWorker' in navigator) {

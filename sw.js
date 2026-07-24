@@ -1,8 +1,11 @@
-const CACHE_NAME = "cahier-classe-v1";
+const CACHE_NAME = "cahier-classe-v2";
 const FICHIERS_A_METTRE_EN_CACHE = [
   "./",
   "./index.html",
-  "./app.jsx",
+  "./app.min.js",
+  "./react.production.min.js",
+  "./react-dom.production.min.js",
+  "./styles.css",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -25,14 +28,6 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  // Réseau d'abord pour les CDN (React, polices), cache local pour le reste
-  const url = event.request.url;
-  if (url.includes("cdn.tailwindcss.com") || url.includes("unpkg.com") || url.includes("fonts.googleapis.com") || url.includes("fonts.gstatic.com")) {
-    event.respondWith(
-      fetch(event.request).catch(() => caches.match(event.request))
-    );
-    return;
-  }
   event.respondWith(
     caches.match(event.request).then((reponse) => reponse || fetch(event.request))
   );
