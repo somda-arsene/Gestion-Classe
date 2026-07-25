@@ -1,4 +1,4 @@
-const CACHE_NAME = "cahier-classe-v2";
+const CACHE_NAME = "cahier-classe-v3";
 const FICHIERS_A_METTRE_EN_CACHE = [
   "./",
   "./index.html",
@@ -27,8 +27,16 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// Réseau d'abord (pour toujours avoir la dernière version en ligne),
+// bascule sur le cache uniquement si hors-ligne.
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then((reponse) => reponse || fetch(event.request))
+    fetch(event.request)
+      .then((reponse) => {
+        const copie = reponse.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copie));
+        return reponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
