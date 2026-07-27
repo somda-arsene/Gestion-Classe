@@ -1,10 +1,11 @@
-const CACHE_NAME = "cahier-classe-v3";
+const CACHE_NAME = "cahier-classe-v4";
 const FICHIERS_A_METTRE_EN_CACHE = [
   "./",
   "./index.html",
   "./app.min.js",
   "./react.production.min.js",
   "./react-dom.production.min.js",
+  "./qrcode.min.js",
   "./styles.css",
   "./manifest.json",
   "./icon-192.png",
