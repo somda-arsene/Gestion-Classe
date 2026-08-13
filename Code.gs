@@ -1,16 +1,16 @@
 /**
  * Script de vérification des codes d'activation - Gestion-Classe
  * ------------------------------------------------------------
- * À coller dans Extensions > Apps Script, depuis un Google Sheet
- * qui contient une feuille nommée "Clients" avec 3 colonnes :
+ * Feuille "Clients" (3 colonnes) :
  *   Colonne A : Email
  *   Colonne B : Code
  *   Colonne C : Ecole
  *
- * L'application enverra l'email, le code et le nom de l'école
- * saisis par l'utilisateur. Ce script répond juste { "valide": true }
- * ou { "valide": false }, sans jamais révéler comment le code
- * a été créé.
+ * Feuille "Connexions" (à créer, 4 colonnes) - journal des tentatives :
+ *   Colonne A : Date/Heure
+ *   Colonne B : Email
+ *   Colonne C : Ecole
+ *   Colonne D : Résultat (Réussi / Échoué)
  */
 
 function doGet(e) {
@@ -21,10 +21,9 @@ function doGet(e) {
   var valide = false;
 
   if (email && code && ecole) {
-    var feuille = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Clients");
-    var lignes = feuille.getDataRange().getValues();
+    var feuilleClients = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Clients");
+    var lignes = feuilleClients.getDataRange().getValues();
 
-    // On saute la ligne d'en-tête (ligne 0)
     for (var i = 1; i < lignes.length; i++) {
       var ligneEmail = normaliser(lignes[i][0]);
       var ligneCode = normaliser(lignes[i][1]).toUpperCase();
@@ -37,9 +36,26 @@ function doGet(e) {
     }
   }
 
+  enregistrerConnexion(e.parameter.email, e.parameter.ecole, valide);
+
   return ContentService
     .createTextOutput(JSON.stringify({ valide: valide }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function enregistrerConnexion(email, ecole, valide) {
+  try {
+    var feuille = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Connexions");
+    if (!feuille) return; // si l'onglet n'existe pas encore, on ignore silencieusement
+    feuille.appendRow([
+      new Date(),
+      email || "",
+      ecole || "",
+      valide ? "Réussi" : "Échoué"
+    ]);
+  } catch (erreur) {
+    // on ne bloque jamais l'activation à cause d'un souci de journalisation
+  }
 }
 
 function normaliser(valeur) {
